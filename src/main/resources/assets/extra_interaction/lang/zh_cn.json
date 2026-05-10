@@ -1,0 +1,9 @@
+{
+  "key.extra_interact.interact": "交互",
+  "extra_interaction.configuration.optionTexture": "选项纹理",
+  "extra_interaction.configuration.xPosPercent": "选项x坐标",
+  "extra_interaction.configuration.yPosPercent": "第一个选项y坐标",
+  "extra_interaction.configuration.optionWidth": "选项的长度",
+  "extra_interaction.configuration.optionHeight": "单个选项的高度",
+  "extra_interaction.configuration.showCount": "完整显示的选项数量"
+}
