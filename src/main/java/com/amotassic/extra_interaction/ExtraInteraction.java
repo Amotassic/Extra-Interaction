@@ -36,11 +36,15 @@ public class ExtraInteraction {
         for (var data : ModList.get().getAllScanData()) {
             for (var annotation : data.getAnnotations()) {
                 if (annotationType.equals(annotation.annotationType()) && annotation.targetType() == ElementType.TYPE) {
+                    String name = annotation.memberName();
                     try {
-                        Class<?> forName = Class.forName(annotation.memberName());
-                        if (forName.getConstructor().newInstance() instanceof InteractionRegister register) register.init();
+                        Class<?> forName = Class.forName(name);
+                        if (forName.getConstructor().newInstance() instanceof InteractionRegister register) {
+                            register.init();
+                            LOGGER.info("Successfully registered interactions in class: {}", name);
+                        }
                     } catch (Throwable e) {
-                        LOGGER.error("Failed to register interactions for class: {}", annotation.memberName());
+                        LOGGER.error("Failed to register interactions for class: {}", name, e);
                     }
                 }
             }

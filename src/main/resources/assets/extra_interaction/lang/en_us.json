@@ -1,9 +1,12 @@
 {
   "key.extra_interact.interact": "Interact",
-  "extra_interaction.configuration.optionTexture": "Option texture",
   "extra_interaction.configuration.xPosPercent": "Option X coordinate",
   "extra_interaction.configuration.yPosPercent": "Y coordinate of the first option",
   "extra_interaction.configuration.optionWidth": "Option width",
   "extra_interaction.configuration.optionHeight": "Height of a single option",
-  "extra_interaction.configuration.showCount": "Number of fully visible options"
+  "extra_interaction.configuration.showCount": "Number of fully visible options",
+
+  "extra_interaction.default_tip0": "这个交互项似乎没有提示信息",
+  "extra_interaction.default_tip1": "作者可能忘记写提示了",
+  "extra_interaction.default_tip2": "作者也许不想给你提示"
 }

@@ -1,7 +1,12 @@
 package com.amotassic.extra_interaction.client;
 
+import com.amotassic.extra_interaction.ExtraInteraction;
+import com.amotassic.extra_interaction.interaction.InteractionRec;
 import com.amotassic.extra_interaction.interaction.Interactions;
 import com.amotassic.extra_interaction.network.SendInteraction;
+import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.platform.Window;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -12,7 +17,7 @@ import net.minecraft.client.renderer.state.gui.BlitRenderState;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.Tuple;
+import net.minecraft.util.Util;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -26,8 +31,10 @@ import java.util.Objects;
 public class InteractionHandler {
     public static final Minecraft minecraft = Minecraft.getInstance();
     public static final KeyMapping interactKey = new KeyMapping("key.extra_interact.interact", GLFW.GLFW_KEY_F, KeyMapping.Category.GAMEPLAY);
+    static final Identifier option = ExtraInteraction.id("textures/option.png");
+    static final Identifier lock = ExtraInteraction.id("textures/lock.png");
     static int selectIndex = 0;
-    static List<Tuple<Object, String>> interactions = new ArrayList<>();
+    static List<InteractionRec> interactions = new ArrayList<>();
 
     public static boolean hasOptions() {return !interactions.isEmpty();}
 
@@ -40,9 +47,7 @@ public class InteractionHandler {
         Object target = null;
         if (result instanceof BlockHitResult blockHitResult) target = blockHitResult.getBlockPos();
         else if (result instanceof EntityHitResult entityHitResult) target = entityHitResult.getEntity();
-        if (target != null) for (String interaction : Interactions.getInteractions(minecraft.player, target)) {
-            interactions.add(new Tuple<>(target, interaction));
-        }
+        if (target != null) Interactions.getInteractions(minecraft.player, target, interactions, hasControlDown());
 
         if (interactions.isEmpty()) return;
         int size = interactions.size();
@@ -66,8 +71,11 @@ public class InteractionHandler {
                     var keyText = Component.keybind("key.extra_interact.interact");
                     guiGraphics.text(font, keyText, x - font.width(keyText) - 5, textY, -1, false);
                 }
-                renderImage(guiGraphics, Config.getOptionTexture(), x, y, 1, 1, width, height);
-                guiGraphics.text(font, Component.translatable(interactions.get(i).getB()), x + 3, textY, bl ? -256 : -1, false);
+                renderImage(guiGraphics, option, x, y, 1, 1, width, height);
+                var rec = interactions.get(i);
+                var icon = rec.canUse() ? rec.interaction().icon : lock;
+                if (icon != null) renderImage(guiGraphics, icon, x, textY - 2, 1, 1, 14, 14);
+                guiGraphics.text(font, Component.translatable(rec.name()), x + (icon == null ? 3 : 15), textY, bl ? -256 : -1, false);
             }
             y += height;
         }
@@ -83,12 +91,15 @@ public class InteractionHandler {
     }
 
     public static void onKey(int key, int scancode, int action, int modifiers) {
-        if (interactions.isEmpty() || minecraft.screen != null) return;
+        var player = minecraft.player;
+        if (interactions.isEmpty() || minecraft.screen != null || player == null) return;
         if (key == interactKey.getKey().getValue()) {
             if (action == 1) {
-                var tuple = interactions.get(selectIndex);
-                Interactions.applyAction(minecraft.player, tuple.getA(), tuple.getB());
-                Objects.requireNonNull(minecraft.getConnection()).send(new SendInteraction(tuple.getB(), tuple.getA()));
+                var rec = interactions.get(selectIndex);
+                if (rec.canUse()) {
+                    Interactions.applyAction(player, rec.target(), rec.name());
+                    Objects.requireNonNull(minecraft.getConnection()).send(new SendInteraction(rec.name(), rec.target()));
+                } else player.sendOverlayMessage(Component.translatable(rec.interaction().getTip()).withStyle(ChatFormatting.RED));
             }
         }
     }
@@ -112,5 +123,15 @@ public class InteractionHandler {
     public static void renderImage(GuiGraphicsExtractor guiGraphics, Identifier identifier, int x, int y, float uw, float uh, int width, int height) {
         AbstractTexture texture = minecraft.getTextureManager().getTexture(identifier);
         guiGraphics.guiRenderState.addGuiElement(new BlitRenderState(RenderPipelines.GUI_TEXTURED, TextureSetup.singleTexture(texture.getTextureView(), texture.getSampler()), new Matrix3x2f(guiGraphics.pose()), x, y, x + width, y + height, 0, uw, 0, uh, -1, guiGraphics.peekScissorStack()));
+    }
+
+    public static Window getWindow() {return minecraft.getWindow();}
+
+    public static boolean hasControlDown() {
+        if (Util.getPlatform() == Util.OS.OSX) {
+            return InputConstants.isKeyDown(getWindow(), 343) || InputConstants.isKeyDown(getWindow(), 347);
+        } else {
+            return InputConstants.isKeyDown(getWindow(), 341) || InputConstants.isKeyDown(getWindow(), 345);
+        }
     }
 }

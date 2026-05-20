@@ -14,11 +14,12 @@ import java.util.function.Predicate;
 
 @ApiStatus.Internal
 public final class Interactions {
-    private static final Map<String, Map<String, Interaction>> BLOCK_INTERACTIONS = new HashMap<>();
-    private static final Map<String, Map<String, Interaction>> ENTITY_INTERACTIONS = new HashMap<>();
-    private static final Map<String, Interaction> EMPTY_MAP = Map.of();
+    static final Map<String, Map<String, Interaction>> BLOCK_INTERACTIONS = new HashMap<>();
+    static final Map<String, Map<String, Interaction>> ENTITY_INTERACTIONS = new HashMap<>();
+    static final Map<String, Interaction> EMPTY_MAP = Map.of();
 
     public static void addForBlock(String id, String name, Interaction interaction) {
+        if (name.isEmpty()) return;
         BLOCK_INTERACTIONS.computeIfAbsent(id, _ -> new LinkedHashMap<>()).put(name, interaction);
     }
 
@@ -27,6 +28,7 @@ public final class Interactions {
     }
 
     public static void addForEntity(String id, String name, Interaction interaction) {
+        if (name.isEmpty()) return;
         ENTITY_INTERACTIONS.computeIfAbsent(id, _ -> new LinkedHashMap<>()).put(name, interaction);
     }
 
@@ -34,26 +36,23 @@ public final class Interactions {
         BuiltInRegistries.ENTITY_TYPE.stream().filter(filter).forEach(type -> addForEntity(getEntityId(type), name, interaction));
     }
 
-    static Set<String> getInteractions(Player player, BlockPos pos) {
-        var interactions = new LinkedHashSet<String>();
+    static void getInteractions(Player player, BlockPos pos, List<InteractionRec> list, boolean showAll) {
         var id = getBlockId(player.level().getBlockState(pos));
         BLOCK_INTERACTIONS.getOrDefault(id, EMPTY_MAP).forEach((name, interaction) -> {
-            if (interaction.test(player, pos)) interactions.add(name);
+            boolean canUse = interaction.test(player, pos);
+            if (canUse || showAll) list.add(new InteractionRec(pos, name, interaction, canUse));
         });
-        return interactions;
     }
-    static Set<String> getInteractions(Player player, Entity entity) {
-        var interactions = new LinkedHashSet<String>();
+    static void getInteractions(Player player, Entity entity, List<InteractionRec> list, boolean showAll) {
         var id = getEntityId(entity);
         ENTITY_INTERACTIONS.getOrDefault(id, EMPTY_MAP).forEach((name, interaction) -> {
-            if (interaction.test(player, entity)) interactions.add(name);
+            boolean canUse = interaction.test(player, entity);
+            if (canUse || showAll) list.add(new InteractionRec(entity, name, interaction, canUse));
         });
-        return interactions;
     }
-    public static Set<String> getInteractions(Player player, Object o) {
-        if (o instanceof BlockPos pos) return getInteractions(player, pos);
-        else if (o instanceof Entity entity) return getInteractions(player, entity);
-        return Set.of();
+    public static void getInteractions(Player player, Object o, List<InteractionRec> list, boolean showAll) {
+        if (o instanceof BlockPos pos) getInteractions(player, pos, list, showAll);
+        else if (o instanceof Entity entity) getInteractions(player, entity, list, showAll);
     }
 
     static void applyAction(Player player, BlockPos pos, String name) {
