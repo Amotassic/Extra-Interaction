@@ -69,7 +69,7 @@ public class InteractionHandler {
                 boolean bl = i == selectIndex;
                 if (bl) {
                     var keyText = Component.keybind("key.extra_interact.interact");
-                    guiGraphics.text(font, keyText, x - font.width(keyText) - 5, textY, -1, false);
+                    drawKeyBoardKey(guiGraphics, x - font.width(keyText) - 9, textY - 1, keyText);
                 }
                 renderImage(guiGraphics, option, x, y, 1, 1, width, height);
                 var rec = interactions.get(i);
@@ -123,6 +123,25 @@ public class InteractionHandler {
     public static void renderImage(GuiGraphicsExtractor guiGraphics, Identifier identifier, int x, int y, float uw, float uh, int width, int height) {
         AbstractTexture texture = minecraft.getTextureManager().getTexture(identifier);
         guiGraphics.guiRenderState.addGuiElement(new BlitRenderState(RenderPipelines.GUI_TEXTURED, TextureSetup.singleTexture(texture.getTextureView(), texture.getSampler()), new Matrix3x2f(guiGraphics.pose()), x, y, x + width, y + height, 0, uw, 0, uh, -1, guiGraphics.peekScissorStack()));
+    }
+
+    public static void drawKeyBoardKey(GuiGraphicsExtractor guiGraphics, int x, int y, Component key) {
+        var font = minecraft.font;
+        // 按键尺寸
+        int width = font.width(key) + 4;
+        int height = 12;
+        int topColor = 0xFF707070;  // 上亮面
+        int faceColor = 0xFF505050;  // 主体灰色
+        int bottomColor = 0xFF202020;  // 下阴影
+        // 背景
+        guiGraphics.fillGradient(x, y, x + width, y + height, topColor, bottomColor); // 垂直渐变背景
+        guiGraphics.fill(x, y, x + width, y + height, faceColor); // 覆盖主色
+        // 画边框
+        guiGraphics.fill(x, y, x + width, y + 1, topColor); // 顶部线
+        guiGraphics.fill(x, y, x + 1, y + height, topColor); // 左边线
+        guiGraphics.fill(x, y + height - 1, x + width, y + height, bottomColor); // 底部线
+        guiGraphics.fill(x + width - 1, y, x + width, y + height, bottomColor); // 右边线
+        guiGraphics.centeredText(font, key, x + width / 2, y + (height - 8) / 2, 0xFFFFFFFF);
     }
 
     public static Window getWindow() {return minecraft.getWindow();}
