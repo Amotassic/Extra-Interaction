@@ -54,4 +54,6 @@ public class ExtraInteraction {
     public static Identifier id(String path) {
         return Identifier.fromNamespaceAndPath(MOD_ID, path);
     }
+
+    public static boolean isModLoaded(String modId) {return ModList.get().isLoaded(modId);}
 }

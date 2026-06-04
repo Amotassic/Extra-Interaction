@@ -40,7 +40,7 @@ public class InteractionHandler {
 
     public static void onHudRender(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         interactions.clear();
-        if (minecraft.level == null || minecraft.player == null) return;
+        if (minecraft.level == null || minecraft.player == null || minecraft.screen != null) return;
         HitResult result = minecraft.hitResult;
         if (result == null || result.getType() == HitResult.Type.MISS) return;
 

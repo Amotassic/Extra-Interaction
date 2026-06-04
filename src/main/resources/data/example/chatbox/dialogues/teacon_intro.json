@@ -1,0 +1,162 @@
+{
+  "$introduce": "Teacon 中与作者对话时展示",
+  "theme": "test:default",
+  "isPause": false,
+  "varsUsed": ["nickName", "chatTimes", "readChatbox", "gaoshou"],
+  "dialogues": {
+    "start": [
+      {
+        "renderEvents": [
+          {"type": "mvel", "value": "setVarIfNoDef('nickName', player.name); setVarIfNoDef('chatTimes', 0); setVarIfNoDef('readChatbox', false); chatTimes++"},
+          {"type": "jump"}
+        ]
+      },
+      {
+        "dialogBox": {
+          "name": "<target>",
+          "text": "<<com.zhenshiz.chatbox.utils.common.StrUtil.format('Ciallo～(∠・ω< )⌒★！{}\n这里是<ruby 6 旮旯给木糕手>噶了给墓高寿，请问{}有什么想要了解的？', chatTimes > 1 ? '很高兴再次见到'+nickName+'。' : '', nickName)>>"
+        },
+        "options": [
+          {"text": "不好意思，我点错了", "next": ""},
+          {"text": "我想了解更多交互模组", "next": "about_EI"},
+          {"text": "这个界面是什么？", "next": "about_CB"},
+          {"text": "更多对话框示例", "next": "more", "unlockCommand": "readChatbox"},
+          {"text": "我也是旮旯给木糕手！", "next": "gaoshou", "click": {"type": "mvel", "value": "gaoshou = true"}}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "啊哈哈哈，那我就不打扰了。拜拜~"}
+      }
+    ],
+    "about_EI": [
+      {
+        "dialogBox": {
+          "name": "<target>", "text": "很多3D游戏都有按F键与物品或者NPC进行交互的功能，而MC中的交互还比较原始，只有左键攻击、右键互动。"
+        }
+      },
+      {
+        "dialogBox": {
+          "name": "<target>", "text": "诚然，这在大部分情况下已经够用，但也不那么直观。\n如果不翻找wiki，许多原版具有的右键交互几乎没人知道。"
+        }
+      },
+      {
+        "dialogBox": {
+          "name": "<target>", "text": "而对于一个实体可能有多种交互的情况，一个右键又不够用了。因此我把这个功能带到了MC中。"
+        }
+      },
+      {
+        "dialogBox": {
+          "name": "<target>", "text": "本项目更倾向于一个api模组，本体不添加额外的交互功能，主要是提供方法便于开发者使用（如联动kubejs）。"
+        }
+      },
+      {
+        "dialogBox": {
+          "name": "<target>",
+          "text": "由于其他游戏里面的交互键基本都默认是F，所以这个模组也如此。\n不过<<nickName>>不用担心交互功能会与原版默认的切换副手键冲突。\n当然，本模组的交互按键也是可以在设置里面修改的。"
+        }
+      },
+      {
+        "dialogBox": {
+          "name": "<target>",
+          "text": "除此之外，对着一个可能有额外交互的实体/方块按住Ctrl键，可以强制显示所有本模组添加的交互项。\n此时尝试触发锁定的交互项则会显示提示信息（如果有）。"
+        }
+      },
+      {
+        "dialogBox": {
+          "name": "<target>", "text": "目前已有的内容就这些，如果<<nickName>>有什么想法或建议，欢迎向作者提出。"
+        }
+      }
+    ],
+    "about_CB": [
+      {
+        "dialogBox": {"name": "<target>", "text": "咳咳，这个问题问得好啊，我想想，该从哪里说起呢……"},
+        "options": [
+          {"text": "不急，你可以慢慢说"},
+          {"text": "直接讲重点吧", "next": "7"}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "如<<nickName>>所见，我是一个旮旯给木糕手。"}
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "在玩旮旯给木时，我会认真对待每一个选项，从不回档，这样能培养我做重大决策的能力。"},
+        "options": [
+          {"text": "那很有主见了"}, {"text": "俺也一样"}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "我会认真阅读每一条文本，即使到了化城郭我也细细品味。"},
+        "options": [
+          {"text": "那很有耐心了", "next": "5"},
+          {"text": "俺也一样", "next": "5"},
+          {"text": "原来你也玩原神"}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "原神是啥？我没听过的旮旯给木？"}
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "众所周知，旮旯给木是非常吃操作的FPS游戏，很多人双手操作都操作不过来，而我用一只手便绰绰有余！"},
+        "options": [
+          {"text": "那很有操作了"},
+          {"text": "俺也一样"},
+          {"text": "另一只手干什么去了，好难猜啊", "unlockCommand": "gaoshou"}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "很多人过完一两条角色线就说自己玩完了一部旮旯给木，而我不仅会攻略所有女主，就连好兄弟的情谊我也不会忘记。"},
+        "options": [
+          {"text": "那很博爱了"}, {"text": "俺也一样！"}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "旮旯给木不仅好玩，还能培养个人许多优秀品质。而Minecraft中既没有对话框，也没有选项框，实在是一种遗憾。这让我这个旮旯给木糕手感到无所适从、寸步难行。"}
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "即使作为方块人，我也要成为旮旯给木糕手，重铸旮旯给木荣光，吾辈义不容辞！"}
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "咳咳，一不小心有点太激动了，回到正题吧。"}
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "所以呢，<<nickName>>目前所看到的是一款励志成为易用但又不失深度的对话框模组。"}
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "易用是指使用者仅需最基本的数据包知识，结合wiki介绍和网页编辑器，便能轻松在MC中添加自己写的对话。"}
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "不失深度是指这个模组尽可能提供多的方法和参数，让对话框的所有元素都可以自定义，并且支持自定义关键帧动画、条件判断、定制的事件等相对高级的东西。"}
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "如此一来，<<nickName>>甚至可以在MC中玩到真正的旮旯给木。"}
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "当然目前这个模组仍在继续完善中，如果<<nickName>>有什么需求或者想法也欢迎向作者反馈。"},
+        "renderEvents": [{"type": "mvel", "value": "readChatbox = true"}]
+      }
+    ],
+    "more": [
+      {
+        "dialogBox": {"name": "<target>", "text": "请选择"},
+        "options": [
+          {"text": "模组简介", "next": "this", "click": {"type": "command", "value": "chatbox skip test:intro start"}},
+          {"text": "买瓜示例", "next": "this", "click": {"type": "command", "value": "chatbox skip example:maigua start"}}
+        ]
+      }
+    ],
+    "gaoshou": [
+      {"dialogBox": {"name": "<target>", "text": "哦？原来<<nickName>>也是旮旯给木糕手吗？幸会幸会！"}},
+      {
+        "dialogBox": {"name": "<target>", "text": "那么旮请问<<nickName>>希望我如何称呼你呢？"},
+        "options": [
+          {"text": "就叫我@s吧", "click": {"type": "mvel", "value": "nickName = player.name"}},
+          {"text": "欧尼酱", "click": {"type": "mvel", "value": "nickName = '欧尼酱'"}},
+          {"text": "狗修金", "click": {"type": "mvel", "value": "nickName = '狗修金'"}},
+          {"text": "萝莉控", "click": {"type": "mvel", "value": "nickName = '萝莉控'"}}
+        ]
+      },
+      {"dialogBox": {"name": "<target>", "text": "好的，<<nickName>>！"}},
+      {"renderEvents": [{"type": "jump", "value": "start"}]}
+    ]
+  }
+}

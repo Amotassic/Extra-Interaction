@@ -1,0 +1,171 @@
+{
+  "$introduce": "买瓜示例",
+  "theme": "test:default",
+  "isPause": false,
+  "dialogues": {
+    "start": [
+      {
+        "dialogBox": {"name": "妈妈", "text": "@s，给你30块钱，你去菜市场帮我买两个番茄回来。\n如果有卖西瓜的，就买一个吧。"}
+      },
+      {
+        "dialogBox": {"name": "@s", "text": "好的，这就去！"}
+      },
+      {
+        "dialogBox": {"text": "到了菜市场，你很容易就看到了卖番茄和西瓜的摊位。\n你走到了有卖番茄的摊位前。"}
+      },
+      {
+        "dialogBox": {"name": "@s", "text": "老板，番茄多少钱一斤？"}
+      },
+      {
+        "dialogBox": {"name": "菜摊摊主", "text": "3块钱一斤。"},
+        "options": [
+          {"text": "买1个", "next": "programmer"},
+          {"text": "买2个", "next": "melon"}
+        ]
+      }
+    ],
+    "programmer": [
+      {
+        "dialogBox": {"name": "菜摊摊主", "text": "正好两块钱。"}
+      },
+      {
+        "dialogBox": {"text": "付完钱，你高兴地走在回家的路上——"}
+      },
+      {
+        "dialogBox": {"name": "@s", "text": "买一个番茄，轻而易举啊！\n还剩28块钱，美汁儿汁儿~"}
+      },
+      {
+        "dialogBox": {"text": "回到家后——"}
+      },
+      {
+        "dialogBox": {"name": "妈妈", "text": "你怎么只买了一个番茄就回来了？"}
+      },
+      {
+        "dialogBox": {"name": "@s", "text": "我看到有卖西瓜的，就只买了一个番茄啊！"}
+      },
+      {
+        "dialogBox": {"name": "妈妈", "text": "唉，典型的程序员思维，没救了。"}
+      }
+    ],
+    "melon": [
+      {
+        "dialogBox": {"name": "菜摊摊主", "text": "两个番茄4块1，收你4块钱吧。"},
+        "renderEvents": [{"type": "mvel", "value": "money = 26"}]
+      },
+      {
+        "dialogBox": {"name": "@s", "text": "谢谢老板！"}
+      },
+      {
+        "dialogBox": {"text": "随后你走到了卖西瓜的摊位前。"}
+      },
+      {
+        "dialogBox": {"name": "@s", "text": "哥们儿，这瓜多少钱一斤哪？"}
+      },
+      {
+        "dialogBox": {"name": "老板", "text": "两块钱一斤"}
+      },
+      {
+        "dialogBox": {"name": "@s", "text": "What's up!\n你这瓜皮是金子做的，还是瓜粒子是金子做的？"}
+      },
+      {
+        "dialogBox": {"name": "老板", "text": "你瞧瞧现在哪儿有瓜啊？\n这都是大鹏的瓜。\n你贤惠我还贤惠呢。"},
+        "options": [
+          {"text": "给我挑一个", "next": "", "click": {"type": "mvel", "value": "self = false"}},
+          {"text": "我自己挑一个", "next": "8", "click": {"type": "mvel", "value": "self = true"}}
+        ]
+      },
+      {
+        "dialogBox": {"name": "老板", "text": "行\n这个怎么样？"},
+        "renderEvents": [{"type": "mvel", "value": "weight = 15"}]
+      },
+      {
+        "dialogBox": {"text": "请挑选你的西瓜——"},
+        "renderEvents": [{"condition": "!self", "type": "jump"}],
+        "stayTick": -1,
+        "portrait": [
+          {
+            "id": "item", "x": 25, "scale": "2.5", "texture": "melon", "hoverTexture": "", "itemCount": 11,
+            "renderEvents": [
+              {"trigger": "click", "type": "mvel", "value": "weight = random.nextInt(3) + 11"},
+              {"trigger": "click", "type": "jump"}
+            ]
+          },
+          {
+            "id": "item", "x": 40, "scale": "3", "texture": "melon", "hoverTexture": "", "itemCount": 45,
+            "renderEvents": [
+              {"trigger": "click", "type": "mvel", "value": "weight = random.nextInt(3) + 14"},
+              {"trigger": "click", "type": "jump"}
+            ]
+          },
+          {
+            "id": "item", "x": 60, "scale": "3.5", "texture": "melon", "hoverTexture": "", "itemCount": 14,
+            "renderEvents": [
+              {"trigger": "click", "type": "mvel", "value": "weight = random.nextInt(3) + 17"},
+              {"trigger": "click", "type": "jump"}
+            ]
+          }
+        ]
+      },
+      {
+        "dialogBox": {"name": "@s", "text": "这瓜保熟吗？"}
+      },
+      {
+        "dialogBox": {"name": "老板", "text": "我开水果摊儿的，能卖给你生瓜蛋子？"}
+      },
+      {
+        "dialogBox": {"name": "@s", "text": "我问你这瓜保熟吗？"}
+      },
+      {
+        "dialogBox": {"name": "老板", "text": "你是故意找猹是不是？\n你要不要吧！"}
+      },
+      {
+        "dialogBox": {"name": "@s", "text": "你这瓜要是熟我肯定要啊！\n那它要是不熟怎么办啊？"}
+      },
+      {
+        "dialogBox": {"name": "老板", "text": "要是不熟，我自己吃了它，Man意了巴！"}
+      },
+      {
+        "dialogBox": {"name": "老板", "text": "<<weight>>斤，<<weight*2>>块"},
+        "options": [
+          {"text": "成交", "next": "buy", "unlockCommand": "weight*2<=money"},
+          {"text": "买不起", "next": "give_up", "unlockCommand": "weight*2>money"},
+          {"text": "质疑老板", "next": ""}
+        ]
+      },
+      {
+        "dialogBox": {"name": "@s", "text": "你这哪儿够<<weight>>斤哪？你这秤有问题啊！"}
+      },
+      {
+        "dialogBox": {"name": "老板", "text": "你TM故意找猹是不是？你要不要？"}
+      },
+      {
+        "dialogBox": {"text": "你把刚才买的番茄放到了老板的秤上一看，居然有2.5斤重。"}
+      },
+      {
+        "dialogBox": {"name": "@s", "text": "喏，鬼秤！\n大家快来看，这个黑心老板秤有问题！"}
+      },
+      {
+        "dialogBox": {"text": "一会儿后，不少人围了过来。\n有之前的菜摊摊主帮你撑腰，人们自然而然都相信你，对卖瓜的老板议论纷纷。"}
+      },
+      {
+        "dialogBox": {"text": "虽然暂时没买到瓜，但也是做了一件好事。"}
+      }
+    ],
+    "buy": [
+      {
+        "dialogBox": {"text": "你很顺利地完成任务回到家"}
+      },
+      {
+        "dialogBox": {"name": "妈妈", "text": "你买这个西瓜花了二十几？你被坑了！"}
+      },
+      {
+        "dialogBox": {"name": "@s", "text": "我去，不早说！"}
+      }
+    ],
+    "give_up": [
+      {
+        "dialogBox": {"name": "@s", "text": "我的钱不够了，下次丕定"}
+      }
+    ]
+  }
+}
