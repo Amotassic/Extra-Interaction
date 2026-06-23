@@ -6,8 +6,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 public record SendInteraction(String name, Object blockPosOrEntityId) implements CustomPacketPayload {
@@ -44,7 +44,7 @@ public record SendInteraction(String name, Object blockPosOrEntityId) implements
         }
     }
 
-    public static void handle(ServerPlayer player, SendInteraction packet) {
+    public static void handle(Player player, SendInteraction packet) {
         Interactions.applyAction(player, packet.blockPosOrEntityId(), packet.name());
     }
 }

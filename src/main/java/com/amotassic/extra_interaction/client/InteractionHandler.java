@@ -1,6 +1,7 @@
 package com.amotassic.extra_interaction.client;
 
 import com.amotassic.extra_interaction.ExtraInteraction;
+import com.amotassic.extra_interaction.SimplePlaceholder;
 import com.amotassic.extra_interaction.interaction.InteractionRec;
 import com.amotassic.extra_interaction.interaction.Interactions;
 import com.amotassic.extra_interaction.network.SendInteraction;
@@ -15,6 +16,7 @@ import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.state.gui.BlitRenderState;
 import net.minecraft.client.renderer.texture.AbstractTexture;
+import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
@@ -75,7 +77,7 @@ public class InteractionHandler {
                 var rec = interactions.get(i);
                 var icon = rec.canUse() ? rec.interaction().icon : lock;
                 if (icon != null) renderImage(guiGraphics, icon, x, textY - 2, 1, 1, 14, 14);
-                guiGraphics.text(font, Component.translatable(rec.name()), x + (icon == null ? 3 : 15), textY, bl ? -256 : -1, false);
+                guiGraphics.text(font, Component.literal(SimplePlaceholder.resolve(minecraft.player, target, translated(rec.name()))), x + (icon == null ? 3 : 15), textY, bl ? -256 : -1, false);
             }
             y += height;
         }
@@ -143,6 +145,8 @@ public class InteractionHandler {
         guiGraphics.fill(x + width - 1, y, x + width, y + height, bottomColor); // 右边线
         guiGraphics.centeredText(font, key, x + width / 2, y + (height - 8) / 2, 0xFFFFFFFF);
     }
+
+    public static String translated(String key) {return Language.getInstance().getOrDefault(key);}
 
     public static Window getWindow() {return minecraft.getWindow();}
 

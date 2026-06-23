@@ -65,6 +65,6 @@ public class Interaction {
     public boolean test(Player player, Object blockPosOrEntity) {return condition.test(player, blockPosOrEntity);}
 
     public void accept(Player player, Object blockPosOrEntity) {
-        if (test(player, blockPosOrEntity)) action.accept(player, blockPosOrEntity);
+        /*if (test(player, blockPosOrEntity)) */action.accept(player, blockPosOrEntity);
     }
 }

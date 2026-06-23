@@ -1,0 +1,19 @@
+{
+  "talks": [
+    {
+      "id": ["minecraft:player", "minecraft:mannequin"],
+      "name": "Zi_Min",
+      "commands": [
+        "tellraw @s \"Hello大家好，欢迎来到籽岷和他朋友们的Minecraft游戏世界！\"",
+        "tellraw @s \"！？强强？！\""
+      ]
+    },
+    {
+      "id": ["minecraft:player", "minecraft:mannequin"],
+      "name": ["Amotassic", "zhenshiz"],
+      "commands": [
+        "chatbox skip example:teacon_intro start 0 <uuid>"
+      ]
+    }
+  ]
+}
