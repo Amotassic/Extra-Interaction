@@ -1,0 +1,206 @@
+{
+  "$introduce": "答题",
+  "theme": "test:default",
+  "isPause": false,
+  "isHistoricalSkip": false,
+  "dialogues": {
+    "start": [
+      {
+        "dialogBox": {"name": "<target>", "text": "你好啊@s，好久不见！"},
+        "options": [
+          {"text": "你好，<target>！"}, {"text": "你好，小吉祥草王！"}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "没想到在这个神奇的异世界也能遇到你，看来@s身上还有许多我不了解的秘密呢。"},
+        "options": [
+          {"text": "<target>是怎么到这个世界来的？"}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "一天，我在教令院里思考着一件事，就像是有一种神秘力量的引导，我不知不觉走到了教令院深处的一个房间。在那里，我发现了一枚神奇的神明罐装知识，它散发着奇异的光芒，我之前从来没有见过。"}
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "我与贤者们讨论了许久，认为不论它是新的危机抑或是机遇，作为智慧之神，我都有必要去了解它、解决它。"}
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "于是我使用了那枚神明罐装知识，然后我的意识被带进了一个全新的世界——也就是这里。"}
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "一花一世界，一树一菩提。这个世界与提瓦特有很大的不同，我在这里学习到了很多新的知识，也进行了许多新的冒险和尝试。"}
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "目前来看，它与提瓦特不存在太大的关联，也影响不到提瓦特。"}
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "本来我还有一丝担心和疑虑，但是刚刚看到@s之后，我的这些担心和疑虑都烟消云散了。"},
+        "options": [
+          {"text": "看来<target>又获得了不少知识呢"}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "确实是呢。\n不过关于这个世界我还有很多疑问，@s可以帮我解答一下吗？"},
+        "options": [
+          {"text": "当然可以"}, {"text": "乐意之至"}, {"text": "还不太行", "next": "bad"}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "好的，那就开始吧。"}
+      },
+      {
+        "dialogBox": {
+          "name": "（系统提示）",
+          "text": "以下题目均为单选题，资料来源于中文Minecraft Wiki，适用于当前版本的原版环境。"
+        },
+        "renderEvents": [
+          {"type": "mvel", "value": "answers = 'CBDBACBADC'; input = ''; def choose(answer) {input += answer;}"}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "结构§b古迹废墟§r无法在这里的哪个群系自然生成？"},
+        "options": [
+          {"text": "针叶林",       "click": {"type": "mvel", "value": "choose('A')"}},
+          {"text": "原始云杉针叶林", "click": {"type": "mvel", "value": "choose('B')"}},
+          {"text": "桦木森林",      "click": {"type": "mvel", "value": "choose('C')"}},
+          {"text": "原始桦木森林",   "click": {"type": "mvel", "value": "choose('D')"}}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "熊猫繁殖时，幼年熊猫获得的两个基因有1/32的概率发生突变，基因突变后结果为哪种基因的概率最低？"},
+        "options": [
+          {"text": "普通", "click": {"type": "mvel", "value": "choose('A')"}},
+          {"text": "忧郁", "click": {"type": "mvel", "value": "choose('B')"}},
+          {"text": "体弱", "click": {"type": "mvel", "value": "choose('C')"}},
+          {"text": "棕色", "click": {"type": "mvel", "value": "choose('D')"}}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "这些锻造模板中，获取方式与其他3项不同的是哪一种？"},
+        "portrait": [
+          {"id": "head", "type": "item", "texture": "dune_armor_trim_smithing_template", "x": 20, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('A')"}, {"trigger": "click", "type": "jump"}]},
+          {"id": "head", "type": "item", "texture": "spire_armor_trim_smithing_template", "x": 40, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('B')"}, {"trigger": "click", "type": "jump"}]},
+          {"id": "head", "type": "item", "texture": "netherite_upgrade_smithing_template", "x": 60, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('C')"}, {"trigger": "click", "type": "jump"}]},
+          {"id": "head", "type": "item", "texture": "tide_armor_trim_smithing_template", "x": 80, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('D')"}, {"trigger": "click", "type": "jump"}]}
+        ],
+        "stayTick": -1
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "要获得§b成双成对§r进度，你必须繁殖出这里的哪种生物？"},
+        "options": [
+          {"text": "悦灵", "click": {"type": "mvel", "value": "choose('A')"}},
+          {"text": "疣猪兽", "click": {"type": "mvel", "value": "choose('B')"}},
+          {"text": "行商羊驼", "click": {"type": "mvel", "value": "choose('C')"}},
+          {"text": "潜影贝", "click": {"type": "mvel", "value": "choose('D')"}}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "§b锁链胸甲§r可以在哪种结构的战利品箱中概率获得？"},
+        "options": [
+          {"text": "林地府邸", "click": {"type": "mvel", "value": "choose('A')"}},
+          {"text": "沉船", "click": {"type": "mvel", "value": "choose('B')"}},
+          {"text": "堡垒遗迹", "click": {"type": "mvel", "value": "choose('C')"}},
+          {"text": "埋藏的宝藏", "click": {"type": "mvel", "value": "choose('D')"}}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "上面哪种物品不能通过工作台合成获得？"},
+        "portrait": [
+          {"id": "head", "type": "item", "texture": "name_tag", "x": 20, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('A')"}, {"trigger": "click", "type": "jump"}]},
+          {"id": "head", "type": "item", "texture": "magma_cream", "x": 40, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('B')"}, {"trigger": "click", "type": "jump"}]},
+          {"id": "head", "type": "item", "texture": "tuff", "x": 60, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('C')"}, {"trigger": "click", "type": "jump"}]},
+          {"id": "head", "type": "item", "texture": "diorite", "x": 80, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('D')"}, {"trigger": "click", "type": "jump"}]}
+        ],
+        "stayTick": -1
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "上面哪种战利品无法在§a和平模式§r由生物掉落？"},
+        "portrait": [
+          {"id": "head", "type": "item", "texture": "slime_ball", "x": 20, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('A')"}, {"trigger": "click", "type": "jump"}]},
+          {"id": "head", "type": "item", "texture": "glowstone_dust", "x": 40, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('B')"}, {"trigger": "click", "type": "jump"}]},
+          {"id": "head", "type": "item", "texture": "phantom_membrane", "x": 60, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('C')"}, {"trigger": "click", "type": "jump"}]},
+          {"id": "head", "type": "item", "texture": "emerald", "x": 80, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('D')"}, {"trigger": "click", "type": "jump"}]}
+        ],
+        "stayTick": -1
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "月相会影响区域难度和生物生成。在哪种月相时，史莱姆在Y=51-69的沼泽完全不会生成？"},
+        "options": [
+          {"text": "新月", "click": {"type": "mvel", "value": "choose('A')"}},
+          {"text": "上弦月", "click": {"type": "mvel", "value": "choose('B')"}},
+          {"text": "满月", "click": {"type": "mvel", "value": "choose('C')"}},
+          {"text": "下弦月", "click": {"type": "mvel", "value": "choose('D')"}}
+        ]
+      },
+      {
+        "dialogBox": {
+          "name": "<target>",
+          "text": "以下关于末影人的说法正确的是？\nA. 喷溅型水瓶直接砸中末影人时，末影人会受到1点伤害。\nB. 雪球无法对末影人造成伤害，因此不会激怒末影人。\nC. 末影人能搬起下界岩。\nD. 末影人站在装有水的炼药锅里时不会受到伤害。"
+        },
+        "options": [
+          {"text": "A", "click": {"type": "mvel", "value": "choose('A')"}},
+          {"text": "B", "click": {"type": "mvel", "value": "choose('B')"}},
+          {"text": "C", "click": {"type": "mvel", "value": "choose('C')"}},
+          {"text": "D", "click": {"type": "mvel", "value": "choose('D')"}}
+        ]
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "对苔藓块使用骨粉后，其周围的哪种方块不可以被转换成苔藓块？"},
+        "portrait": [
+          {"id": "head", "type": "item", "texture": "tuff", "x": 20, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('A')"}, {"trigger": "click", "type": "jump"}]},
+          {"id": "head", "type": "item", "texture": "mycelium", "x": 40, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('B')"}, {"trigger": "click", "type": "jump"}]},
+          {"id": "head", "type": "item", "texture": "gravel", "x": 60, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('C')"}, {"trigger": "click", "type": "jump"}]},
+          {"id": "head", "type": "item", "texture": "glow_berries", "x": 80, "y": 25, "scale": 3,
+            "renderEvents": [{"trigger": "click", "type": "mvel", "value": "choose('D')"}, {"trigger": "click", "type": "jump"}]}
+        ],
+        "stayTick": -1
+      },
+      {
+        "dialogBox": {"name": "<target>", "text": "好的@s，我没有别的问题了。让我看看结果如何。"},
+        "renderEvents": [
+          {"type": "mvel", "value": "right = []; for (int i = 0; i < input.length(); i++) { if (input[i] == answers[i]) { right.add(i); } }; rightNum = right.size();"}
+        ],
+        "options": [
+          {"text": "简直是小菜一碟"}, {"text": "（什么，原来<target>都知道答案吗）"}
+        ]
+      },
+      {
+        "dialogBox": {
+          "name": "（系统提示）",
+          "text": "<<rightNum == 0 ? '很遗憾，你没有回答对任何题目。' : '你回答对了' + rightNum + '个题目'>>"
+        }
+      },
+      {
+        "renderEvents": [
+          {"type": "mvel", "value": "if (rightNum < 4) { executeCompEvt('jump', 'bad'); } else if (rightNum < 7) { executeCompEvt('jump', 'normal'); } else if (rightNum < 10) { executeCompEvt('jump', 'good'); } else { executeCompEvt('jump', 'perfect'); }"}
+        ]
+      }
+    ],
+    "bad": [
+      {"dialogBox": {"name": "<target>", "text": "看来@s还需要多多留意这个世界的细节呢。"}}
+    ],
+    "normal": [
+      {"dialogBox": {"name": "<target>", "text": "还不错呢，继续加油吧！"}}
+    ],
+    "good": [
+      {"dialogBox": {"name": "<target>", "text": "很棒，看来@s在这个世界也是个优秀的冒险家呢！"}}
+    ],
+    "perfect": [
+      {"dialogBox": {"name": "<target>", "text": "不愧是@s呢，对这个世界了如指掌！"}}
+    ]
+  }
+}

@@ -1,7 +1,7 @@
 {
   "talks": [
     {
-      "id": ["minecraft:player", "minecraft:mannequin"],
+      "id": ["minecraft:mannequin"],
       "name": "Zi_Min",
       "commands": [
         "tellraw @s \"Hello大家好，欢迎来到籽岷和他朋友们的Minecraft游戏世界！\"",
@@ -13,6 +13,20 @@
       "name": ["Amotassic", "zhenshiz"],
       "commands": [
         "chatbox skip example:teacon_intro start 0 <uuid>"
+      ]
+    },
+    {
+      "id": ["minecraft:mannequin"],
+      "name": ["纳西妲", "Nahida"],
+      "commands": [
+        "chatbox skip example:questions start 0 <uuid>"
+      ]
+    },
+    {
+      "id": ["minecraft:mannequin"],
+      "name": ["因幡巡", "麻瓜瓜"],
+      "commands": [
+        "playsound chatbox:ciallo player @s"
       ]
     }
   ]
